@@ -12,6 +12,15 @@
         <input type = "text" name ="image">
         <label for="starting_bid">Starting Bid</label>
         <input type = "integer" name ="starting_bid">
+        <label for="category">Category</label>
+        <select name ="category">
+        {% for cat in categories %}
+            <option>
+            {{ cat }}
+            </option>
+        {% endfor %}
+        </select>
+        
         <input type="submit">
     </form>
     

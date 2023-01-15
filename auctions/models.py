@@ -4,12 +4,17 @@ from django.db import models
 
 class User(AbstractUser):
     pass
+    
 
 #need to add watchlist to users
 #need to add category
 #need to make sure that a listing is associated with a user
 
+class Category(models.Model):
+    category_name = models.CharField(max_length=64)
 
+    def __str__(self):
+        return f"{self.category_name}"
 
 class Listing(models.Model):
     title = models.CharField(max_length=64)
@@ -18,9 +23,14 @@ class Listing(models.Model):
     active = models.BooleanField(default=True)
     starting_bid = models.IntegerField()
     creator = models.ForeignKey(User,on_delete=models.CASCADE)
-    
-    
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,blank=True,null=True)
 
+    
+    def __str__(self):
+        return f"{self.id}: {self.title}"
+
+
+    
 class Bid(models.Model):
     bid_amount = models.IntegerField()
     listing = models.ForeignKey(Listing, on_delete=models.CASCADE)

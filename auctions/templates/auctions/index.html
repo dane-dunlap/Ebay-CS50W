@@ -2,6 +2,23 @@
 
 {% block body %}
     <h2>Active Listings</h2>
+    {% for listing in listings %}
+        <div class="listing-container">
+            <div class="left">
+                <div class="img-container">
+                    <a href="{% url 'listing' listing.id %}"><img style="height:200px;" class="listing-image" src="{{ listing.image }}"></a>
+                </div>
+            </div>
+            <div class="right">
+                <div class="text-container">
+                    Title: {{ listing.title }}
+                    Description: {{ listing.description }}
+                    Starting bid: {{ listing.starting_bid }}
+                    Owner: {{ listing.creator }}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
 
     
 {% endblock %}
