@@ -3,9 +3,24 @@
 {% block body %}
 {% if user.is_authenticated %}
     <h2>Listing</h2>
-    {% if listing_owner %}
-    <button>Close listing</button>
+    {% if not watchlist %}
+        <form method = "POST", action="{% url 'add_to_watchlist' listing.id %}">
+        {% csrf_token %}
+        <button type="submit">Add to watchlist</button>
+        </form>
+    {% else %}
+        <form method = "POST", action="{% url 'remove_from_watchlist' listing.id %}">
+        {% csrf_token %}
+        <button type="submit">Remove from watchlist</button>
+        </form>
     {% endif %}
+    {% if listing_owner %}
+    <form method = "POST", action="{% url 'remove_listing' listing.id %}">
+        {% csrf_token %}
+    <button>Close listing</button>
+    </form>
+    {% endif %}
+    
    {{ listing.id }}
    {{ listing.title }}
    {{ listing.description }}
@@ -15,7 +30,7 @@
     <p>No bids</p>
     {% endif %}
    <form method="POST" action="{% url 'place_bid' listing.id %}">
-    {% csrf_token %}
+    
     {{ message }}
     <label for="bid">Place a bid:</label>
     <input type="number" name="bid">

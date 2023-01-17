@@ -22,8 +22,9 @@ class Listing(models.Model):
     image = models.URLField(max_length = 200,blank=True)
     active = models.BooleanField(default=True)
     starting_bid = models.IntegerField()
-    creator = models.ForeignKey(User,on_delete=models.CASCADE)
-    category = models.ForeignKey(Category,on_delete=models.CASCADE,blank=True,null=True)
+    creator = models.ForeignKey(User,on_delete=models.CASCADE,related_name="creator")
+    category = models.ForeignKey(Category,on_delete=models.CASCADE,blank=True,null=True,related_name="category")
+    watchlist = models.ManyToManyField(User,blank=True,null=True,related_name="watchlist_listing")
 
     
     def __str__(self):
